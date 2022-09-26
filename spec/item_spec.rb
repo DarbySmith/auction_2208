@@ -25,6 +25,10 @@ RSpec.describe Item do
     it 'has no bids to start' do
       expect(@item1.bids).to eq({})
     end
+
+    it 'can have bids by default' do
+      expect(@item1.bidding_closed).to eq(false)
+    end
   end
 
   describe '#add_bid' do
@@ -48,4 +52,20 @@ RSpec.describe Item do
       expect(@item1.current_high_bid).to eq(22)
     end
   end
-end
+
+  describe '#close_bidding' do
+    it 'makes the item unable to receive additional bids' do
+      @item1.add_bid(@attendee1, 22)
+      @item1.add_bid(@attendee2, 20)
+      @item4.add_bid(@attendee3, 50)
+      @item3.add_bid(@attendee2, 15)
+      @item1.close_bidding
+      @item1.add_bid(@attendee3, 70)
+      bids = {
+        @attendee2 => 20,
+        @attendee1 => 22
+      }
+      expect(@item1.bids).to eq(bids)
+    end
+  end
+end 
