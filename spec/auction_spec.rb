@@ -21,8 +21,18 @@ RSpec.describe Auction do
     it 'can add an item to the items array' do
       @auction.add_item(@item1)
       @auction.add_item(@item2)
-
+      
       expect(@auction.items).to eq([@item1, @item2])
+    end
+  end
+  
+  describe '#item_names' do
+    it 'returns an array of item names' do
+      @auction.add_item(@item1)
+      @auction.add_item(@item2)
+    
+      expect(@auction.items).to eq([@item1, @item2])
+      expect(@auction.item_names).to eq(['Chalkware Piggy Bank', 'Bamboo Picture Frame'])
     end
   end
 end
