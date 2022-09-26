@@ -51,4 +51,22 @@ class Auction
     end
     bidder_information
   end
+
+  def date
+    Date.today.strftime("%d/%m/%Y")
+  end
+
+  # def close_auction
+  #   sold_items = {}
+  #   @items.each do |item|
+  #     sorted_bids = item.bids.sort_by do |attendee, bid|
+  #       -bid
+  #     end
+  #     if sorted_bids[0][0].budget > sorted_bids[0][1]
+  #       sold_items[item] = sorted_bids[0][0]
+  #     end
+  #   end
+  #   require 'pry'; binding.pry
+  #   sold_items
+  # end
 end

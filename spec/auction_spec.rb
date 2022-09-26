@@ -121,4 +121,36 @@ RSpec.describe Auction do
       expect(@auction.bidder_info).to eq(bidder_info)
     end
   end
+
+  describe '#date' do
+    it 'has a date' do
+      allow(Date).to receive(:today).and_return(Date.new(2022,9,26))
+      expect(@auction.date).to eq("26/09/2022")
+    end
+  end
+
+  xdescribe '#close_auction' do
+    it 'returns a hash of items and their purchaser' do
+      @auction.add_item(@item1)
+      @auction.add_item(@item2)
+      @auction.add_item(@item3)
+      @auction.add_item(@item4)
+      @auction.add_item(@item5)
+      @item1.add_bid(@attendee1, 22)
+      @item1.add_bid(@attendee2, 20)
+      @item4.add_bid(@attendee2, 30)
+      @item4.add_bid(@attendee3, 50)
+      @item3.add_bid(@attendee2, 15)
+      @item5.add_bid(@attendee1, 35)
+      @auction.close_auction
+      sold_items = {
+        @item1 => @attendee2,
+        @item2 => 'Not Sold',
+        @item3 => @attendee2,
+        @item4 => @attendee3,
+        @item5 => @attendee1
+      }
+      expect(@auction.close_auction).to eq(sold_items)
+    end
+  end
 end 
