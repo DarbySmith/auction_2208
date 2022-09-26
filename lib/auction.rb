@@ -20,4 +20,24 @@ class Auction
       item.bids == {}
     end
   end
+
+  def potential_revenue
+    @items.sum do |item|
+      if item.bids == {}
+        item = 0
+      else
+        item.current_high_bid       
+      end
+    end
+  end
+
+  def bidders
+    bidders = []
+    @items.each do |item|
+      item.bids.each do |attendee, bid|
+        bidders << attendee.name
+      end
+    end
+    bidders.uniq
+  end
 end
